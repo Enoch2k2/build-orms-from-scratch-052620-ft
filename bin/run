@@ -1,0 +1,12 @@
+#!/usr/bin/env ruby
+
+require_relative "../lib/environment"
+
+Pet.create({"name" => "Sammy", "species" => "Fish"})
+Pet.create({"name" => "Sammy", "species" => "Fish"})
+Pet.create({"name" => "Lil Bub", "species" => "Cat"})
+Pet.create({"name" => "Fido", "species" => "Dog"})
+
+pet = Pet.find(1)
+
+# pet.update({ "species" => "Shark" })
