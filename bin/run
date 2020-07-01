@@ -2,6 +2,7 @@
 
 require_relative "../lib/environment"
 
+# binding.pry
 CLI.new.run
 
 # pet.update({ "species" => "Shark" })

@@ -11,6 +11,7 @@ ActiveRecord::Base.establish_connection(
 # ActiveRecord::Base.connection
 
 require_relative './intro_to_orms_052620/pet'
+require_relative './intro_to_orms_052620/owner'
 require_relative './intro_to_orms_052620/cli'
 
 # DB = {:conn => SQLite3::Database.new("db/pet_shop.db")}

@@ -1,7 +1,22 @@
 class CLI
+  attr_accessor :current_user
+
   def run
     puts "Welcome to the Pet Shop!"
+    login
     menu_options
+  end
+
+  def login
+    puts "What is your name?"
+    name = gets.strip
+    owner = Owner.find_or_create_by(name: name)
+    unless owner
+      display_errors(owner.errors.full_messages)
+      login
+    else
+      self.current_user = owner
+    end
   end
 
   def menu_options
@@ -30,18 +45,30 @@ class CLI
   end
 
   def create_pet
-    puts "What is the pet's name?"
+    puts "What is your pet's name?"
     name = gets.strip
-    puts "What is the pet's species?"
+    puts "What is your pet's species?"
     
     species = gets.strip
+    pet = Pet.new(name: name, species: species, owner: self.current_user)
+    unless pet.save
+      display_errors(pet.errors.full_messages)
+      puts "please try again"
+      create_pet
+    else
+      puts "#{pet.name} has been successfully created."
+    end
+  end
 
-    pet = Pet.create(name: name, species: species)
-    puts "#{pet.name} has been successfully created."
+  def display_errors(error_messages)
+    error_messages.each do |error|
+      puts error
+    end
   end
 
   def list_pets
-    Pet.all.each.with_index(1) do |pet, index|
+    self.current_user.reload
+    self.current_user.pets.each.with_index(1) do |pet, index|
       puts "#{index}. #{pet.name} who is a #{pet.species}"
     end
   end
